@@ -14,23 +14,23 @@ import { ProdutosService } from './produtos.service';
 export class ProdutosController {
   constructor(private readonly produtoService: ProdutosService) {}
   @Get()
-  obterTodos(): Produto[] {
-    return this.produtoService.obterTodos();
+  async obterTodos(): Promise<Produto[]> {
+    return await this.produtoService.obterTodos();
   }
 
   @Get(':id')
-  obetrUm(@Param() params): Produto {
-    return this.produtoService.obterUm(params.id);
+  async obetrUm(@Param() params): Promise<Produto> {
+    return await this.produtoService.obterUm(params.id);
   }
 
   @Post()
-  criar(@Body() produto: Produto): Produto {
-    return this.produtoService.criar(produto);
+  async criar(@Body() produto: Produto): Promise<Produto> {
+    return await this.produtoService.criar(produto);
   }
 
-  @Put()
-  alterar(@Body() produto: Produto): Produto {
-    return produto;
+  @Put(':id')
+  alterar(@Param() params, @Body() produto: Produto): Promise<[number]> {
+    return this.produtoService.alterar(produto, params.id);
   }
 
   @Delete(':id')
